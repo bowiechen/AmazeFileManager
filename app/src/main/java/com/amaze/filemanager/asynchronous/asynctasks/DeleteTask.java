@@ -27,9 +27,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import androidx.documentfile.provider.DocumentFile;
 import android.widget.Toast;
-
+import androidx.documentfile.provider.DocumentFile;
 import com.amaze.filemanager.R;
 import com.amaze.filemanager.activities.MainActivity;
 import com.amaze.filemanager.database.CryptHandler;
@@ -45,7 +44,6 @@ import com.amaze.filemanager.utils.cloud.CloudUtil;
 import com.amaze.filemanager.utils.files.CryptUtil;
 import com.amaze.filemanager.utils.files.FileUtils;
 import com.cloudrail.si.interfaces.CloudStorage;
-
 import java.util.ArrayList;
 
 public class DeleteTask extends AsyncTask<ArrayList<HybridFileParcelable>, String, Boolean> {
@@ -170,6 +168,10 @@ public class DeleteTask extends AsyncTask<ArrayList<HybridFileParcelable>, Strin
 
     @Override
     public void onPostExecute(Boolean wasDeleted) {
+        if (files.isEmpty()) {
+            // if the list of files is empty, there is nothing to do.
+            return;
+        }
 
         Intent intent = new Intent(MainActivity.KEY_INTENT_LOAD_LIST);
         String path = files.get(0).getParent(cd);
